@@ -1,0 +1,5 @@
+/dev/ttyACM0,9600,N,8,n
+./
+## Only the first 2 lines are processed.
+1 <SERIAL PORT ADDRESS>,<BAUDRATE>,<PARITY>,<BYTESIZE>,<EOL char>
+2 <DATA SAVE PATH>
