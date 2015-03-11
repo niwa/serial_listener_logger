@@ -15,15 +15,15 @@ indent_mode=2
 [project]
 name=sll
 base_path=/home/gustavo/repositories/serial_listener_logger
+description=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=1
-FILE_NAME_0=404;Python;0;EUTF-8;1;1;0;%2Fhome%2Fgustavo%2Frepositories%2Fserial_listener_logger%2Flogger_main.py;0;4
-FILE_NAME_1=12;None;0;EUTF-8;1;1;0;%2Fhome%2Fgustavo%2Frepositories%2Fserial_listener_logger%2Fsettings.txt;0;4
+current_page=0
+FILE_NAME_0=1545;Python;0;EUTF-8;1;1;0;%2Fhome%2Fgustavo%2Frepositories%2Fserial_listener_logger%2Flogger_main.py;0;4
 
 [VTE]
 last_dir=/home/gustavo/repositories/serial_listener_logger

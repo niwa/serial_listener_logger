@@ -29,6 +29,8 @@ print(port)
 datapath = settings_file.readline().rstrip('\n')
 print(datapath)
 prev_file_name = datapath+time.strftime("%Y%m%d.txt",rec_time)
+# Read the compressing flag
+flags = settings_file.readline().rstrip().split(',')
 # Close the settings file
 settings_file.close()
 # Hacks to work with custom end of line
@@ -68,12 +70,10 @@ while True:
 	current_file.close()
 	line = ""
 	bline = bytearray()
+	# Compress data if required
 	# Is it the last minute of the day?
-	if current_file_name != prev_file_name:
-		subprocess.call(["gzip",prev_file_name])
-		prev_file_name = current_file_name
-	# Wait until the next second
-	#while int(time.time())<=rec_time_s:
-		#wait a few miliseconds
-		#time.sleep(0.05)	
+	if flags[0] == 1:
+		if current_file_name != prev_file_name:
+			subprocess.call(["gzip",prev_file_name])
+			prev_file_name = current_file_name	
 print('I\'m done')
