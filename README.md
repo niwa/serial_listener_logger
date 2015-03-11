@@ -10,7 +10,6 @@ The settings.txt file gives the required information to the script using the fol
 ```
 The naming of the stored files is **YYYYMMDD.txt** (e.g., 20150131.txt).
 
-Licensed under the MIT license (see LICENSE file for details)
 ## Modules required
 * **pyserial**
 * **time**
