@@ -6,9 +6,10 @@ The settings.txt file gives the required information to the script using the fol
 ```
 <SERIAL PORT ADDRESS>,<BAUDRATE>,<PARITY>,<BYTESIZE>,<EOL char>
 <DATA SAVE PATH>
+<short(YYYYMMDD.tsv)/long(YYY-MM-DD.tsv) data filename>,<UTC or local for the timestamp>
 <compress data? 1 == YES>
 ```
-The naming of the stored files is **YYYY-MM-DD.txt** (e.g., 2015-01-31.txt).
+The naming of the stored files follows the settings flag short/long.
 
 ## Modules required
 * **pyserial**
