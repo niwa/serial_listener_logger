@@ -7,7 +7,7 @@ import subprocess # Shell utilities ... compressing data files
 
 # Set the time constants
 rec_time=time.localtime()
-timestamp = time.strftime("%Y-%m-%d %H:%M:%S",rec_time)
+timestamp = time.strftime("%Y-%m-%d/t%H:%M:%S",rec_time)
 # Read the settings from the settings file
 settings_file = open("./settings.txt")
 # e.g. "/dev/ttyUSB0"
@@ -59,8 +59,8 @@ while True:
 	# Set the time for the record
 	rec_time_s = int(time.time())
 	rec_time=time.localtime()
-	timestamp = time.strftime("%Y-%m-%d %H:%M:%S",rec_time)
-	file_line = timestamp+','+line
+	timestamp = time.strftime("%Y-%m-%d/t%H:%M:%S",rec_time)
+	file_line = timestamp+'/t'+line
 	print(file_line)
 	# Save it to the appropriate file
 	current_file_name = datapath+time.strftime("%Y-%m-%d.txt",rec_time)
