@@ -7,7 +7,7 @@ import subprocess # Shell utilities ... compressing data files
 
 # Set the time constants
 rec_time=time.localtime()
-timestamp = time.strftime("%Y-%m-%d/t%H:%M:%S",rec_time)
+timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
 # Read the settings from the settings file
 settings_file = open("./settings.txt")
 # e.g. "/dev/ttyUSB0"
@@ -28,7 +28,7 @@ print(port)
 # e.g. "/home/logger/datacpc3010/"
 datapath = settings_file.readline().rstrip('\n')
 print(datapath)
-prev_file_name = datapath+time.strftime("%Y-%m-%d.txt",rec_time)
+prev_file_name = datapath+time.strftime("%Y-%m-%d.tsv",rec_time)
 # Read the compressing flag
 flags = settings_file.readline().rstrip().split(',')
 # Close the settings file
@@ -59,11 +59,11 @@ while True:
 	# Set the time for the record
 	rec_time_s = int(time.time())
 	rec_time=time.localtime()
-	timestamp = time.strftime("%Y-%m-%d/t%H:%M:%S",rec_time)
-	file_line = timestamp+'/t'+line
+	timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
+	file_line = timestamp+'\t'+line
 	print(file_line)
 	# Save it to the appropriate file
-	current_file_name = datapath+time.strftime("%Y-%m-%d.txt",rec_time)
+	current_file_name = datapath+time.strftime("%Y-%m-%d.tsv",rec_time)
 	current_file = open(current_file_name,"a")
 	current_file.write(file_line+"\n")
 	current_file.flush()
