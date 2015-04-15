@@ -8,7 +8,7 @@ The settings.txt file gives the required information to the script using the fol
 <DATA SAVE PATH>
 <compress data? 1 == YES>
 ```
-The naming of the stored files is **YYYYMMDD.txt** (e.g., 20150131.txt).
+The naming of the stored files is **YYYY-MM-DD.txt** (e.g., 2015-01-31.txt).
 
 ## Modules required
 * **pyserial**
