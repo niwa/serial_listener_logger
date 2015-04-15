@@ -5,9 +5,13 @@ import serial # Serial communications
 import time # Timing utilities
 import subprocess # Shell utilities ... compressing data files
 
-# Set the time constants
-rec_time=time.localtime()
-timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
+# Localtime or UTC date wrapper
+def get_time(selector):
+	if (selector=='local'):
+		return time.localtime()
+	else:
+		return time.gmtime()
+
 # Read the settings from the settings file
 settings_file = open("./settings.txt")
 # e.g. "/dev/ttyUSB0"
@@ -28,11 +32,22 @@ print(port)
 # e.g. "/home/logger/datacpc3010/"
 datapath = settings_file.readline().rstrip('\n')
 print(datapath)
-prev_file_name = datapath+time.strftime("%Y-%m-%d.tsv",rec_time)
+filetimeformat = settings_file.readline().rstrip('\n').split(',')
+print(filetimeformat)
+# Short or long file name format
+if (filetimeformat[0]=='short'):
+	fnamefmt = "%Y%m%d.tsv"
+else:
+	fnamefmt = "%Y-%m-%d.tsv"
 # Read the compressing flag
 flags = settings_file.readline().rstrip().split(',')
 # Close the settings file
 settings_file.close()
+# Set the time constants
+rec_time=get_time(filetimeformat[1])
+timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
+# Previous file name
+prev_file_name = datapath+time.strftime(fnamefmt,rec_time)
 # Hacks to work with custom end of line
 leneol = len(eol)
 print(leneol)
@@ -58,12 +73,12 @@ while True:
 	#line = ser.readline()
 	# Set the time for the record
 	rec_time_s = int(time.time())
-	rec_time=time.localtime()
+	rec_time=rec_time=get_time(filetimeformat[1])
 	timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
 	file_line = timestamp+'\t'+line
 	print(file_line)
 	# Save it to the appropriate file
-	current_file_name = datapath+time.strftime("%Y-%m-%d.tsv",rec_time)
+	current_file_name = datapath+time.strftime(fnamefmt,rec_time)
 	current_file = open(current_file_name,"a")
 	current_file.write(file_line+"\n")
 	current_file.flush()
