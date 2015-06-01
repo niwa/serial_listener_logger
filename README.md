@@ -17,6 +17,6 @@ The naming of the stored files follows the settings flag short/long.
 * **subprocess**
 * **logging**
 
-## License
+## License: MIT
 See [license file](./LICENSE.md)
 
