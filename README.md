@@ -15,6 +15,7 @@ The naming of the stored files follows the settings flag short/long.
 * **pyserial**
 * **time**
 * **subprocess**
+* **logging**
 
 ## License
 See [license file](./LICENSE.md)
