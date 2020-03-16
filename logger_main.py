@@ -3,7 +3,7 @@
 # Load the libraries
 import serial # Serial communications
 import time # Timing utilities
-import subprocess # Shell utilities ... compressing data files
+from pathlib import Path
 
 # Localtime or UTC date wrapper
 def get_time(selector):
@@ -14,13 +14,16 @@ def get_time(selector):
 
 # Read the settings from the settings file
 settings_file = open("./settings.txt")
+# First the name of the instrument
+dev_name = settings_file.readline().rstrip('\n')
 # e.g. "/dev/ttyUSB0"
 settings_line = settings_file.readline().rstrip('\n').split(',')
 port = settings_line[0]
 baud = eval(settings_line[1])
 par  = settings_line[2]
 byte = eval(settings_line[3])
-ceol = settings_line[4]
+stopbit = eval(settings_line[4])
+ceol = settings_line[5]
 if ceol == 'r':
 	eol = b'\r'
 elif ceol == 'nr':
@@ -30,21 +33,14 @@ else:
 print(port)
 # path for data files
 # e.g. "/home/logger/datacpc3010/"
-datapath = settings_file.readline().rstrip('\n')
+datapath = settings_file.readline().rstrip('\n') + dev_name
+Path(datapath).mkdir(parents=True, exist_ok=True)
 print(datapath)
-filetimeformat = settings_file.readline().rstrip('\n').split(',')
-print(filetimeformat)
-# Short or long file name format
-if (filetimeformat[0]=='short'):
-	fnamefmt = "%Y%m%d.tsv"
-else:
-	fnamefmt = "%Y-%m-%d.tsv"
-# Read the compressing flag
-flags = settings_file.readline().rstrip().split(',')
+fnamefmt = "%Y%m%d.tsv"
 # Close the settings file
 settings_file.close()
 # Set the time constants
-rec_time=get_time(filetimeformat[1])
+rec_time=get_time('UTC')
 timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
 # Previous file name
 prev_file_name = datapath+time.strftime(fnamefmt,rec_time)
@@ -58,9 +54,11 @@ ser.port = port
 ser.baudrate = baud
 ser.parity = par
 ser.bytesize = byte
+ser.stopbits = stopbit
 ser.open()
 ser.flushInput()
 ser.flushOutput()
+print("Port " + port + " flushed")
 while True:
 	# Get a line of data from the instrument
 	while True:
@@ -73,7 +71,7 @@ while True:
 	#line = ser.readline()
 	# Set the time for the record
 	rec_time_s = int(time.time())
-	rec_time=rec_time=get_time(filetimeformat[1])
+	rec_time=rec_time=get_time('UTC')
 	timestamp = time.strftime("%Y-%m-%d\t%H:%M:%S",rec_time)
 	file_line = timestamp+'\t'+line
 	print(file_line)
@@ -85,10 +83,4 @@ while True:
 	current_file.close()
 	line = ""
 	bline = bytearray()
-	# Compress data if required
-	# Is it the last minute of the day?
-	if flags[0] == 1:
-		if current_file_name != prev_file_name:
-			subprocess.call(["gzip",prev_file_name])
-			prev_file_name = current_file_name	
 print('I\'m done')
