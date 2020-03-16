@@ -1,0 +1,20 @@
+DEMO
+/dev/ttyUSB0,9600,N,8,1,n
+./
+## This and the lines below are NOT read by the program
+1 <NAME OF THE INSTRUMENT TO LABEL FILES>
+2 <SERIAL PORT ADDRESS>,<BAUDRATE>,<PARITY>,<BYTESIZE>,<STOPBIT>,<EOL char>
+3 <DATA SAVE PATH>
+
+Examples:
+grimm11E
+COM4,9600,N,8,1,n
+./
+
+aethalometer
+COM5,9600,N,8,1,n
+./
+
+ccn
+COM5,9600,N,8,1,n
+./
